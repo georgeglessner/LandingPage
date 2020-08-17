@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css"
+      rel="stylesheet"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"
+    />
+  </head>
+  <body>
+    <div id="app">
+      <v-app>
+        <v-main>
+          <v-container class="fill-height" fluid v-if="!submitted">
+            <v-row align="center" justify="center">
+              <v-col cols="12" sm="8" md="4">
+                <v-card class="elevation-12" elevation="24">
+                  <v-img class="align-end" src="logo.png">
+                  </v-img>
+                  <v-toolbar color="primary" dark flat>
+                    <v-toolbar-title>Connect With Us!</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                  </v-toolbar>
+                  <v-card-text>
+                    <v-form ref="form">
+                      <v-text-field
+                        label="Name"
+                        v-model="name"
+                        prepend-icon="mdi-account"
+                        type="text"
+                        :rules="nameRules"
+                        required
+                      ></v-text-field>
+
+                      <v-text-field
+                        label="Company"
+                        v-model="company"
+                        prepend-icon="mdi-briefcase"
+                        type="text"
+                      ></v-text-field>
+
+                      <v-text-field
+                        label="Cell"
+                        v-model="cell"
+                        prepend-icon="mdi-cellphone"
+                        type="text"
+                      ></v-text-field>
+
+                      <v-text-field
+                        label="E-Mail"
+                        v-model="email"
+                        prepend-icon="mdi-email"
+                        type="text"
+                        :rules="emailRules"
+                        required
+                      ></v-text-field>
+
+                      <v-textarea
+                        label="Comments"
+                        v-model="comments"
+                        prepend-icon="mdi-comment"
+                      ></v-textarea>
+                    </v-form>
+                  </v-card-text>
+                  <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn color="primary" @click="submit">Submit</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+          <v-container class="fill-height" fluid v-if="submitted">
+            <v-row align="center" justify="center">
+              <v-col cols="12" sm="8" md="4">
+                <v-card class="elevation-12" elevation="24">
+                  <v-img class="align-end" height="200px" src="logo.png">
+                  </v-img>
+                  <v-toolbar color="primary" dark flat>
+                    <v-toolbar-title
+                      >Thank you! We will reach out shortly.</v-toolbar-title
+                    >
+                    <v-spacer></v-spacer>
+                  </v-toolbar>
+                </v-card>
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-main>
+      </v-app>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        vuetify: new Vuetify(),
+        data: {
+          name: "",
+          company: "",
+          cell: "",
+          email: "",
+          comments: "",
+          submitted: false,
+          nameRules: [
+            (v) => !!v || "Name is required",
+            (v) =>
+              (v && v.length >= 3) || "Name must be less than 10 characters",
+          ],
+          emailRules: [
+            (v) => !!v || "E-mail is required",
+            (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+          ],
+        },
+        methods: {
+          validate() {
+            return this.$refs.form.validate();
+          },
+          submit() {
+            if (this.validate()) {
+              console.log(this.name);
+              console.log(this.company);
+              console.log(this.cell);
+              console.log(this.email);
+              console.log(this.comments);
+
+              this.submitted = true;
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
